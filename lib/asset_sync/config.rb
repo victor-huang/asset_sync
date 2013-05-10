@@ -178,7 +178,10 @@ module AssetSync
         raise ArgumentError, "AssetSync Unknown provider: #{fog_provider} only AWS and Rackspace are supported currently."
       end
 
-      options.merge!({:region => fog_region}) if fog_region
+      if fog_region
+        rackspace? ? options.merge!({:rackspace_region => fog_region}) :
+          options.merge!({:region => fog_region})
+      end
       return options
     end
 
